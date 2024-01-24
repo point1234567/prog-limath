@@ -206,14 +206,17 @@ body{
             <input type="password" class="password" placeholder="Your Password">
             <i class='bx bx-lock-alt'></i>
         </div>
-        <button class="login">Login</button>
+        <a href="#">
+            <button class="login">Login</button>
+        </a>
         <div>
             <a href="#">Rest Password</a>
             <a href="#">Don't have an account?</a>
         </div>
        </form>
     </div>
-     function check() {
+    <script>
+             function check() {
     var username = document.getElementById("username").value;
     var password = document.getElementById("password").value;
     if (username === '' | password === '') {
@@ -222,5 +225,7 @@ body{
     else {
       return false;
     }
-  }</body>
+  }
+    </script>
+</body>
 </html>
