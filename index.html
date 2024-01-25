@@ -1,231 +1,326 @@
-<!DOCTYPE html>
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Hedvig+Letters+Serif:opsz@12..24&family=Mulish:wght@300;400;500;600;700;800&display=swap');
+<!doctype html>
+<html lang="en">
 
-*{
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-    font-family: 'Mulish' , sans-serif;
+    <style>
+        /* Import Google Font - Poppins */
+@import url("https://fonts.googleapis.com/css2?family=Merriweather:wght@400;500;600;700&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Merriweather", sans-serif;
 }
 
-body{
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #ffffff;
+body {
+  display: flex;
+  padding: 0 10px;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: #0f172a;
 }
 
-.logo{
-    position: absolute;
-    top: 22px;
-    left: 22px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
+::selection {
+  color: #fff;
+  background: deepskyblue;
 }
 
-.logo img{
-    width: 48px;
+.wrapper {
+  width: 770px;
+  padding: 35px;
+  background: #0f172a;
+  color: #f1f5f9;
+  border-radius: 10px;
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.05);
 }
 
-.logo a{
-    font-size: 24px;
-    font-weight: bold;
-    text-decoration: none;
-    color: #464646;
+.wrapper .input-field {
+  opacity: 0;
+  z-index: -999;
+  position: absolute;
 }
 
-.continer{
-    width: 440px;
-    padding: 40px 32px;
-    border-radius: 8px;
-    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+.wrapper .content-box {
+  padding: 13px 20px 0;
+  border-radius: 10px;
+  border: 1px solid #bfbfbf;
 }
 
-.continer h1{
-    font-size: 1.6rem;
+.content-box .typing-text {
+  overflow: hidden;
+  max-height: 256px;
 }
 
-.continer .social-login{
-    display: flex;
-    gap: 16px;
-    margin: 20px;
+.typing-text::-webkit-scrollbar {
+  width: 0;
 }
 
-.continer .social-login button{
-    padding: 8px;
-    width: 100%;
-    border-radius: 8px;
-    cursor: pointer;
+.typing-text p {
+  font-size: 25px;
+  text-align: justify;
+  letter-spacing: 1px;
 }
 
-.continer .social-login button{
-    padding: 8px;
-    width: 100%;
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    font-size: 1rem;
-    font-weight: 700;
-    color: #323760;
-    border: 1px solid #6667d0;
-    background: transparent;
-    cursor: pointer;
-    transition: all 0.3s ease;
+.typing-text p span {
+  position: relative;
 }
 
-.continer .social-login button i{
-    font-size: 26px;
+.typing-text p span.correct {
+  color: lawngreen;
 }
 
-.continer .social-login button:hover{
-   color: #6667d0;
-   border-color: #6667d0;
+.typing-text p span.incorrect {
+  color: #cb3439;
+  outline: 1px solid #fff;
+  background: #ffc0cb;
+  border-radius: 4px;
 }
 
-.continer .divider{
-    display: flex;
-    align-items: center;
-    gap: 20px;
+.typing-text p span.active {
+  color: deepskyblue;
 }
 
-.continer .divider .line{
-    height: 1px;
-    width: 100%;
-    background-color: #1d1d1d;
-    opacity: 0.2;
-    margin: 30px 0 16px;
+.typing-text p span.active::before {
+  position: absolute;
+  content: "";
+  height: 2px;
+  width: 100%;
+  bottom: 0;
+  left: 0;
+  opacity: 0;
+  border-radius: 5px;
+  background: deepskyblue;
+  animation: blink 1s ease-in-out infinite;
 }
 
-.continer form label{
-    color: 1d1d1d;
-    font-size: 14px;
-    font-weight: bold;
-    letter-spacing: 0.03rem;
-    display: block;
-    margin-top: 12px;
-}
-
-
-
-.continer form .custome-input input{
-    color: #1d1d1d;
-    font-size: 16px;
-    font-weight: 500;
-    width: 100%;
-    height: 46px; 
-    letter-spacing: 0.03rem;
-    border: 1px solid #1d1d1d;
-    background: transparent;
-    outline: none;
-    border-radius: 8px;
-    text-indent: 20px;
-    margin-top: 6px;
-    transition: all 0.3s ease;
-}
-
-.continer form .custome-input input:focus{
-    border-color: #5222fd;
-}
-
-.continer form .custome-input .bx-at{
-    position: absolute;
-    font-size: 28px;
-    right: 515px;
-    top: 320px;
-    transition: all 0.3s ease;
-}
-
-.continer form .custome-input .bx-lock-alt{
-    position: absolute;
-    font-size: 28px;
-    right: 510px;
-    top: 390px;
-    transition: all 0.3s ease;
-}
-
-.continer form .custome-input input:focus + i{
-    color: #5222fd;
-}
-
-.continer form .login{
-    width: 100%;
-    margin-top: 30px;
-    background-color: #5222fd;
-    color: #ffffff;
-    border: none;
-    line-height: 50px;
-    font-size: 18px;
-    letter-spacing: 0.025rem;
-    font-weight: 800;
-    cursor: pointer;
-}
-</style>
-<html lang="en">   
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <title>Login</title>
-</head>
-<body>
-    <div class="logo">
-        <img src="https://socialcounts.org/_next/image?url=https%3A%2F%2Fwww.banner.yt%2FUCJqXkOwrq7uBn-sn_Fvce9Q%2Favatar%3Fwidth%3D640&w=256&q=75" alt="">
-        <a href="#">Asmr Prog</a>
-    </div>
-    <div class="continer">
-       <h1>Create your account👏</h1>
-       <div class="social-login">
-        <button class="google">
-            <i class='bx bxl-google'></i>
-            Use Google
-        </button>
-        <button class="google">
-            <i class='bx bxl-apple'></i>
-            Use Apple
-        </button>
-       </div>
-       <div class="divider">
-        <div class="line"></div>
-        <p class="p">Or</p>
-        <div class="line"></div>
-       </div>
-       <form>
-        <table class="email" for="email">Email</table>
-        <div class="custome-input">
-            <input type="email" class="email" placeholder="Your Email" autocomplete="off" aria-autocomplete="off">
-            <i class='bx bx-at'></i>
-        </div>
-
-        <table for="password">Password</table>
-        <div class="custome-input">
-            <input type="password" class="password" placeholder="Your Password">
-            <i class='bx bx-lock-alt'></i>
-        </div>
-        <a href="#">
-            <button class="login">Login</button>
-        </a>
-        <div>
-            <a href="#">Rest Password</a>
-            <a href="#">Don't have an account?</a>
-        </div>
-       </form>
-    </div>
-    <script>
-             function check() {
-    var username = document.getElementById("username").value;
-    var password = document.getElementById("password").value;
-    if (username === '' | password === '') {
-      return true;
-    }
-    else {
-      return false;
-    }
+@keyframes blink {
+  50% {
+    opacity: 1;
   }
+}
+
+.content-box .content {
+  margin-top: 17px;
+  display: flex;
+  padding: 12px 0;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid #bfbfbf;
+  line-break: auto;
+}
+
+.content button {
+  outline: none;
+  border: none;
+  width: 105px;
+  color: #fff;
+  padding: 8px 0;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+  background: deepskyblue;
+  transition: transform 0.3s ease;
+}
+
+.content button:active {
+  transform: scale(0.97);
+}
+
+.content .result-details {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  width: calc(100% - 140px);
+  justify-content: space-between;
+}
+
+.result-details li {
+  display: flex;
+  height: 20px;
+  list-style: none;
+  position: relative;
+  align-items: center;
+}
+
+.result-details li:not(:first-child) {
+  padding-left: 22px;
+  border-left: 1px solid #bfbfbf;
+}
+
+.result-details li p {
+  font-size: 19px;
+}
+
+.result-details li span {
+  display: block;
+  font-size: 20px;
+  margin-left: 10px;
+}
+
+li span b {
+  font-weight: 500;
+}
+
+li:not(:first-child) span {
+  font-weight: 500;
+}
+
+.errors span {
+  color: #facc15;
+}
+
+.timeLeft span {
+  color: #cb3439;
+}
+    </style>
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+
+    <title>Typing Speed Test using JavaScript - Coding Torque</title>
+</head>
+
+<body>
+	<div class="wrapper">
+		<input type="text" class="input-field">
+		<div class="content-box">
+			<div class="typing-text">
+				<p></p>
+			</div>
+			<div class="content">
+				<ul class="result-details">
+					<li class="timeLeft">
+						<p>残り時間:</p>
+						<span><b>60</b>s</span>
+					</li>
+					<li class="errors">
+						<p>エラー:
+						</p>
+						<span>0</span>
+					</li>
+					<li class="wpm">
+						<p>WPM:</p>
+						<span>0</span>
+					</li>
+					<li class="cpm">
+						<p>CPM:</p>
+						<span>0</span>
+					</li>
+				</ul>
+				<button>Test Again</button>
+			</div>
+		</div>
+	</div>
+    <!-- Further code here -->
+
+    <script src="script.js">
+        const paragraphs = [
+    "たぬき　おせんべい　ゴミ　イスラム　キリスト　漢字　嫌い　プログラミング　",
+    "There was a leak in the boat. Nobody had yet noticed it, and nobody would for the next couple of hours. This was a problem since the boat was heading out to sea and while the leak was quite small at the moment, it would be much larger when it was ultimately discovered. John had planned it exactly this way.",
+    "The paper was blank. It shouldn't have been. There should have been writing on the paper, at least a paragraph if not more. The fact that the writing wasn't there was frustrating. Actually, it was even more than frustrating. It was downright distressing.", "The coin hovered in the air, spinning over and over again. It reached its peak and began to descend. Both boys were pleading with it to land a certain way but the coin had already made up its mind on what it was going to do.",
+    "I'll talk to you tomorrow in more detail at our meeting, but I think I've found a solution to our problem. It's not exactly legal, but it won't land us in jail for the rest of our lives either. Are you willing to take the chance? Monroe asked his partner over the phone.",
+    "There was a time when he would have embraced the change that was coming. In his youth, he sought adventure and the unknown, but that had been years ago. He wished he could go back and learn to find the excitement that came with change but it was useless. That curiosity had long left him to where he had come to loathe anything that put him out of his comfort zone."
+];
+
+const typingText = document.querySelector(".typing-text p"),
+    inpField = document.querySelector(".wrapper .input-field"),
+    tryAgainBtn = document.querySelector(".content button"),
+    timeTag = document.querySelector(".timeLeft span b"),
+    errorTag = document.querySelector(".errors span"),
+    wpmTag = document.querySelector(".wpm span"),
+    cpmTag = document.querySelector(".cpm span");
+
+let timer,
+    maxTime = 60,
+    timeLeft = maxTime,
+    charIndex = errors = isTyping = 0;
+
+function loadParagraph() {
+    const ranIndex = Math.floor(Math.random() * paragraphs.length);
+    typingText.innerHTML = "";
+    paragraphs[ranIndex].split("").forEach(char => {
+        let span = `<span>${char}</span>`
+        typingText.innerHTML += span;
+    });
+    typingText.querySelectorAll("span")[0].classList.add("active");
+    document.addEventListener("keydown", () => inpField.focus());
+    typingText.addEventListener("click", () => inpField.focus());
+}
+
+function initTyping() {
+    let characters = typingText.querySelectorAll("span");
+    let typedChar = inpField.value.split("")[charIndex];
+    if (charIndex < characters.length - 1 && timeLeft > 0) {
+        if (!isTyping) {
+            timer = setInterval(initTimer, 1000);
+            isTyping = true;
+        }
+        if (typedChar == null) {
+            if (charIndex > 0) {
+                charIndex--;
+                if (characters[charIndex].classList.contains("incorrect")) {
+                    errors--;
+                }
+                characters[charIndex].classList.remove("correct", "incorrect");
+            }
+        } else {
+            if (characters[charIndex].innerText == typedChar) {
+                characters[charIndex].classList.add("correct");
+            } else {
+                errors++;
+                characters[charIndex].classList.add("incorrect");
+            }
+            charIndex++;
+        }
+        characters.forEach(span => span.classList.remove("active"));
+        characters[charIndex].classList.add("active");
+
+        let wpm = Math.round(((charIndex - errors) / 5) / (maxTime - timeLeft) * 60);
+        wpm = wpm < 0 || !wpm || wpm === Infinity ? 0 : wpm;
+
+        wpmTag.innerText = wpm;
+        errorTag.innerText = errors;
+        cpmTag.innerText = charIndex - errors;
+    } else {
+        clearInterval(timer);
+        inpField.value = "";
+    }
+}
+
+function initTimer() {
+    if (timeLeft > 0) {
+        timeLeft--;
+        timeTag.innerText = timeLeft;
+        let wpm = Math.round(((charIndex - errors) / 5) / (maxTime - timeLeft) * 60);
+        wpmTag.innerText = wpm;
+    } else {
+        clearInterval(timer);
+    }
+}
+
+function resetTest() {
+    loadParagraph();
+    clearInterval(timer);
+    timeLeft = maxTime;
+    charIndex = errors = isTyping = 0;
+    inpField.value = "";
+    timeTag.innerText = timeLeft;
+    wpmTag.innerText = 0;
+    errorTag.innerText = 3;
+    cpmTag.innerText = 0;
+}
+
+loadParagraph();
+inpField.addEventListener("input", initTyping);
+tryAgainBtn.addEventListener("click", resetTest);
     </script>
 </body>
+
 </html>
