@@ -1,326 +1,349 @@
-<!doctype html>
+<!DOCTYPE html>
+
+<style>
+	*{
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: none;
+    box-sizing: border-box;
+}
+
+body{
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #06283d;
+}
+
+.container{
+    position: relative;
+    width: 400px;
+    height: 105px;
+    background: #fff;
+    padding: 28px 32px;
+    overflow: hidden;
+    border-radius: 18px;
+    font-family: 'Roboto', sans-serif;
+    transition: 0.6s ease-out;
+}
+
+.search-box{
+    width: 100%;
+    height: min-content;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.search-box input{
+    color: black;
+    width: 80%;
+    font-size: 24px;
+    font-weight: 500;
+    text-transform: uppercase;
+    padding-left: 32px;
+}
+
+.search-box input::placeholder{
+    font-size: 20px;
+    font-weight: 500;
+    color: #06283d;
+    text-transform: capitalize;
+}
+
+.search-box button{
+    cursor: pointer;
+    width: 50px;
+    height: 50px;
+    color: #06283d;
+    background-color: #dff6ff;
+    border-radius: 50%;
+    font-size: 22px;
+    transform: 0.4s ease;
+}
+
+.search-box button:hover{
+    color: #ffffff;
+    background: #535353;
+}
+
+.search-box i{
+
+    color: #06283d;
+    font-size: 28px;
+}
+
+.weather-box{
+    text-align: center;
+}
+
+.weather-box img{
+    width: 60%;
+    margin-top: 30px;
+}
+
+.weather-box .temperature{
+    position: relative;
+    color: #06283d;
+    font-size: 4rem;
+    font-weight: 800;
+    margin-top: 30px;
+    margin-left: -16px;
+}
+
+.weather-box .temperature span{
+    position: absolute;
+    margin-left: 4px;
+    font-size: 1.5rem;
+}
+
+.weather-box .description{
+    color: #06283d;
+    font-size: 22px;
+    font-weight: 500;
+    text-transform: capitalize;
+}
+
+.weather-details{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+}
+
+.weather-details .humidity .weather-details .wind{
+    display: flex;
+    align-items: center;
+    width: 50%;
+    height: 100px;
+}
+
+.weather-details i{
+    color: #06283d;
+    font-size: 26px;
+    margin-right: 10px;
+    margin-left: 6px;
+}
+
+.weather-details span{
+    color: #06283d;
+    font-size: 22px;
+    font-weight: 500;
+}
+
+.weather-details p{
+    color: #06283d;
+    font-size: 14px;
+    font-weight: 500
+}
+
+.not-found{
+    width: 100%;
+    text-align: center;
+    margin-top: 50px;
+    scale: 0;
+    opacity: 0;
+    display: none;
+}
+
+.not-found img{
+    width: 70%;
+}
+
+.not-found p{
+    color: #06283d;
+    font-size: 22px;
+    font-weight: 500;
+    margin-top: 12px;
+}
+
+.weather-box, .weather-details{
+    scale: 0;
+    opacity: 0;
+}
+
+.fade-In{
+    animation: 0.5s fadeIn forwards;
+    animation-delay: 0.5s;
+}
+
+@keyframes fadeIn{
+    to {
+        scale: 1;
+        opacity: 1;
+    }
+}
+</style>
+
 <html lang="en">
-
-    <style>
-        /* Import Google Font - Poppins */
-@import url("https://fonts.googleapis.com/css2?family=Merriweather:wght@400;500;600;700&display=swap");
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: "Merriweather", sans-serif;
-}
-
-body {
-  display: flex;
-  padding: 0 10px;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
-  background: #0f172a;
-}
-
-::selection {
-  color: #fff;
-  background: deepskyblue;
-}
-
-.wrapper {
-  width: 770px;
-  padding: 35px;
-  background: #0f172a;
-  color: #f1f5f9;
-  border-radius: 10px;
-  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.05);
-}
-
-.wrapper .input-field {
-  opacity: 0;
-  z-index: -999;
-  position: absolute;
-}
-
-.wrapper .content-box {
-  padding: 13px 20px 0;
-  border-radius: 10px;
-  border: 1px solid #bfbfbf;
-}
-
-.content-box .typing-text {
-  overflow: hidden;
-  max-height: 256px;
-}
-
-.typing-text::-webkit-scrollbar {
-  width: 0;
-}
-
-.typing-text p {
-  font-size: 25px;
-  text-align: justify;
-  letter-spacing: 1px;
-}
-
-.typing-text p span {
-  position: relative;
-}
-
-.typing-text p span.correct {
-  color: lawngreen;
-}
-
-.typing-text p span.incorrect {
-  color: #cb3439;
-  outline: 1px solid #fff;
-  background: #ffc0cb;
-  border-radius: 4px;
-}
-
-.typing-text p span.active {
-  color: deepskyblue;
-}
-
-.typing-text p span.active::before {
-  position: absolute;
-  content: "";
-  height: 2px;
-  width: 100%;
-  bottom: 0;
-  left: 0;
-  opacity: 0;
-  border-radius: 5px;
-  background: deepskyblue;
-  animation: blink 1s ease-in-out infinite;
-}
-
-@keyframes blink {
-  50% {
-    opacity: 1;
-  }
-}
-
-.content-box .content {
-  margin-top: 17px;
-  display: flex;
-  padding: 12px 0;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  border-top: 1px solid #bfbfbf;
-  line-break: auto;
-}
-
-.content button {
-  outline: none;
-  border: none;
-  width: 105px;
-  color: #fff;
-  padding: 8px 0;
-  font-size: 16px;
-  cursor: pointer;
-  border-radius: 5px;
-  background: deepskyblue;
-  transition: transform 0.3s ease;
-}
-
-.content button:active {
-  transform: scale(0.97);
-}
-
-.content .result-details {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  width: calc(100% - 140px);
-  justify-content: space-between;
-}
-
-.result-details li {
-  display: flex;
-  height: 20px;
-  list-style: none;
-  position: relative;
-  align-items: center;
-}
-
-.result-details li:not(:first-child) {
-  padding-left: 22px;
-  border-left: 1px solid #bfbfbf;
-}
-
-.result-details li p {
-  font-size: 19px;
-}
-
-.result-details li span {
-  display: block;
-  font-size: 20px;
-  margin-left: 10px;
-}
-
-li span b {
-  font-weight: 500;
-}
-
-li:not(:first-child) span {
-  font-weight: 500;
-}
-
-.errors span {
-  color: #facc15;
-}
-
-.timeLeft span {
-  color: #cb3439;
-}
-    </style>
-
 <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <!-- CSS -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-
-    <title>Typing Speed Test using JavaScript - Coding Torque</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <title>weather App</title>
 </head>
-
 <body>
-	<div class="wrapper">
-		<input type="text" class="input-field">
-		<div class="content-box">
-			<div class="typing-text">
-				<p></p>
-			</div>
-			<div class="content">
-				<ul class="result-details">
-					<li class="timeLeft">
-						<p>残り時間:</p>
-						<span><b>60</b>s</span>
-					</li>
-					<li class="errors">
-						<p>エラー:
-						</p>
-						<span>0</span>
-					</li>
-					<li class="wpm">
-						<p>WPM:</p>
-						<span>0</span>
-					</li>
-					<li class="cpm">
-						<p>CPM:</p>
-						<span>0</span>
-					</li>
-				</ul>
-				<button>Test Again</button>
-			</div>
-		</div>
-	</div>
-    <!-- Further code here -->
 
-    <script src="script.js">
-        const paragraphs = [
-    "たぬき　おせんべい　ゴミ　イスラム　キリスト　漢字　嫌い　プログラミング　",
-    "There was a leak in the boat. Nobody had yet noticed it, and nobody would for the next couple of hours. This was a problem since the boat was heading out to sea and while the leak was quite small at the moment, it would be much larger when it was ultimately discovered. John had planned it exactly this way.",
-    "The paper was blank. It shouldn't have been. There should have been writing on the paper, at least a paragraph if not more. The fact that the writing wasn't there was frustrating. Actually, it was even more than frustrating. It was downright distressing.", "The coin hovered in the air, spinning over and over again. It reached its peak and began to descend. Both boys were pleading with it to land a certain way but the coin had already made up its mind on what it was going to do.",
-    "I'll talk to you tomorrow in more detail at our meeting, but I think I've found a solution to our problem. It's not exactly legal, but it won't land us in jail for the rest of our lives either. Are you willing to take the chance? Monroe asked his partner over the phone.",
-    "There was a time when he would have embraced the change that was coming. In his youth, he sought adventure and the unknown, but that had been years ago. He wished he could go back and learn to find the excitement that came with change but it was useless. That curiosity had long left him to where he had come to loathe anything that put him out of his comfort zone."
-];
+    <div class="container">
+        <div class="search-box">
+            <i class='bx bxs-map'></i>
+            <input type="text" placeholder="Enter your location">
+            <button class="fa-solid fa-maginfying-glass">
+                <i class='bx bx-search'></i>
+            </button>
+        </div>
 
-const typingText = document.querySelector(".typing-text p"),
-    inpField = document.querySelector(".wrapper .input-field"),
-    tryAgainBtn = document.querySelector(".content button"),
-    timeTag = document.querySelector(".timeLeft span b"),
-    errorTag = document.querySelector(".errors span"),
-    wpmTag = document.querySelector(".wpm span"),
-    cpmTag = document.querySelector(".cpm span");
+        <div class="not-found">
+            <img src="not-found.png">
+            <p>Oops! Invalid location :(</p>
+        </div>
 
-let timer,
-    maxTime = 60,
-    timeLeft = maxTime,
-    charIndex = errors = isTyping = 0;
+        <div class="weather-box">
+            <img src="">
+            <p class="temperature"></p>
+            <p class="description"></p>
+        </div>
 
-function loadParagraph() {
-    const ranIndex = Math.floor(Math.random() * paragraphs.length);
-    typingText.innerHTML = "";
-    paragraphs[ranIndex].split("").forEach(char => {
-        let span = `<span>${char}</span>`
-        typingText.innerHTML += span;
-    });
-    typingText.querySelectorAll("span")[0].classList.add("active");
-    document.addEventListener("keydown", () => inpField.focus());
-    typingText.addEventListener("click", () => inpField.focus());
-}
+        <div style="width: 100%; display: flex; justify-content: space-between; margin-top: 30px; padding-left: 20px; justify-content: flex-end;" class="weather-details">
+            <div style="display: flex; align-items: center; width: 50%; height: 100px; padding-left: 20px; justify-content: flex-start;" class="humidity">
+                <i class="fa-solid fa-water"></i>
+                <div class="text">
+                    <span></span>
+                    <p>Humidity</p>
+                </div>
+            </div>
 
-function initTyping() {
-    let characters = typingText.querySelectorAll("span");
-    let typedChar = inpField.value.split("")[charIndex];
-    if (charIndex < characters.length - 1 && timeLeft > 0) {
-        if (!isTyping) {
-            timer = setInterval(initTimer, 1000);
-            isTyping = true;
+            <div style="display: flex; align-items: center; width: 50%; height: 100px; padding-left: 20px; justify-content: flex-end;" class="wind">
+                <i class="fa-solid fa-wind"></i>
+                <div class="text">
+                    <span></span>
+                    <p>Wind speed</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://kit.fontawesome.com/7c8801c017.js" crossorigin="anonymous"></script>
+    <script src="index.js">
+	    const container = document.querySelector('.container');
+const search = document.querySelector('.search-box button');
+const weatherBox = document.querySelector('.weather-box');
+const weatherDetails = document.querySelector('.weather-details');
+const error404 = document.querySelector('.not-found');
+
+search.addEventListener('click', () => {
+
+    const APIkey = '74e3857ba00ea0c72cff911f8415cfff';
+    const city = document.querySelector('.search-box input').value;
+
+    if(city === ''){
+        return;
+    }
+
+    fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${APIkey}`)
+    .then(Response => Response.json())
+    .then(json => {
+
+        if(json.cod === '404'){
+            container.style.height = '400px';
+            weatherBox.style.display = 'none';
+            weatherDetails.style.display = 'none';
+            error404.style.display = 'block';
+            error404.classList.add('fadeIn');
+            return;
         }
-        if (typedChar == null) {
-            if (charIndex > 0) {
-                charIndex--;
-                if (characters[charIndex].classList.contains("incorrect")) {
-                    errors--;
+
+        error404.style.display = 'none';
+        error404.classList.remove('fadeIn');
+
+        const image = document.querySelector('.weather-box img');
+        const temperature = document.querySelector('.weather-box .temperature');
+        const description = document.querySelector('.weather-box .description');
+        const humidity = document.querySelector('.weather-details .humidity span');
+        const wind = document.querySelector('.weather-details .wind span');
+
+        search.addEventListener('click', () => {
+
+            const APIkey = '74e3857ba00ea0c72cff911f8415cfff';
+            const city = document.querySelector('.search-box input').value;
+        
+            if(city === ''){
+                return;
+            }
+        
+            fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${APIkey}`)
+            .then(Response => Response.json())
+            .then(json => {
+        
+                if(json.cod === '404'){
+                    container.style.height = '400px';
+                    weatherBox.style.display = 'none';
+                    weatherDetails.style.display = 'none';
+                    error404.style.display = 'block';
+                    error404.classList.add('fadeIn');
+                    return;
                 }
-                characters[charIndex].classList.remove("correct", "incorrect");
-            }
-        } else {
-            if (characters[charIndex].innerText == typedChar) {
-                characters[charIndex].classList.add("correct");
-            } else {
-                errors++;
-                characters[charIndex].classList.add("incorrect");
-            }
-            charIndex++;
-        }
-        characters.forEach(span => span.classList.remove("active"));
-        characters[charIndex].classList.add("active");
+        
+                error404.style.display = 'none';
+                error404.classList.remove('fadeIn');
+        
+                const image = document.querySelector('.weather-box img');
+                const temperature = document.querySelector('.weather-box .temperature');
+                const description = document.querySelector('.weather-box .description');
+                const humidity = document.querySelector('.weather-details .humidity span');
+                const wind = document.querySelector('.weather-details .wind span');
+        
+                switch (json.weather[0].main) {
+                    case 'Clear':
+                        image.src = 'https://ssl.gstatic.com/onebox/weather/64/sunny.png';
+                        break;
+                    case 'Rain':
+                        image.src = 'https://ssl.gstatic.com/onebox/weather/64/rain.png';
+                        break;
+                    case 'Snow':
+                        image.src = 'images/snow.png';
+                        break;
+                    case 'Clouds':
+                        image.src = 'images/clouds.png';
+                        break;
+                    case 'Haze':
+                        image.src = 'images/haze.png';
+                        break;
+                    default:
+                        image.src = '';
+                }
+        
+                temperature.innerHTML = `${parseInt(json.main.temp)}<span>°C</span>`;
+                description.innerHTML = `${json.weather[0].description}`;
+                humidity.innerHTML = `${json.main.humidity}%`;
+                wind.innerHTML = `${parseInt(json.wind.speed)}km/h`;
+        
+                weatherBox.style.display = 'block';
+                weatherDetails.style.display = 'block';
+                weatherBox.classList.add('fadeIn');
+                weatherDetails.classList.add('fadeIn');
+                container.style.height = '590px';
+            });
+        
+        });
 
-        let wpm = Math.round(((charIndex - errors) / 5) / (maxTime - timeLeft) * 60);
-        wpm = wpm < 0 || !wpm || wpm === Infinity ? 0 : wpm;
+        temperature.innerHTML = `${parseInt(json.main.temp)}<span>°C</span>`;
+        description.innerHTML = `${json.weather[0].description}`;
+        humidity.innerHTML = `${json.main.humidity}%`;
+        wind.innerHTML = `${parseInt(json.wind.speed)}km/h`;
 
-        wpmTag.innerText = wpm;
-        errorTag.innerText = errors;
-        cpmTag.innerText = charIndex - errors;
-    } else {
-        clearInterval(timer);
-        inpField.value = "";
-    }
-}
+        weatherBox.style.display = 'block';
+        weatherDetails.style.display = 'block';
+        weatherBox.classList.add('fadeIn');
+        weatherDetails.classList.add('fadeIn');
+        container.style.height = '590px';
+    });
 
-function initTimer() {
-    if (timeLeft > 0) {
-        timeLeft--;
-        timeTag.innerText = timeLeft;
-        let wpm = Math.round(((charIndex - errors) / 5) / (maxTime - timeLeft) * 60);
-        wpmTag.innerText = wpm;
-    } else {
-        clearInterval(timer);
-    }
-}
-
-function resetTest() {
-    loadParagraph();
-    clearInterval(timer);
-    timeLeft = maxTime;
-    charIndex = errors = isTyping = 0;
-    inpField.value = "";
-    timeTag.innerText = timeLeft;
-    wpmTag.innerText = 0;
-    errorTag.innerText = 3;
-    cpmTag.innerText = 0;
-}
-
-loadParagraph();
-inpField.addEventListener("input", initTyping);
-tryAgainBtn.addEventListener("click", resetTest);
+});
     </script>
+    
 </body>
-
 </html>
